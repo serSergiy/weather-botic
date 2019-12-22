@@ -13,12 +13,16 @@ class OpenWeatherProvider
     /** @var Client */
     private $client;
 
+    /** @var string */
+    private $appId;
+
     public function __construct()
     {
         $this->client = new Client([
             'base_uri' => 'https://api.openweathermap.org/data/2.5/',
-            'APPID' => '0b336f748455bd7022fb3613ec42d5cb',
         ]);
+
+        $this->appId = env('OPEN_WEATHER_APP_ID');
     }
 
     public function getForecastByCityId(int $cityZip, string $countryCode)
@@ -27,7 +31,7 @@ class OpenWeatherProvider
             'query' => [
                 'zip' => $cityZip,
                 'country code' => $countryCode,
-                'APPID' => '0b336f748455bd7022fb3613ec42d5cb'
+                'APPID' => $this->appId,
             ],
         ]);
 
