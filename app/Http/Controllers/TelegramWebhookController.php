@@ -11,6 +11,6 @@ class TelegramWebhookController
 {
     function __invoke(Request $request): JsonResponse
     {
-
+        return new JsonResponse('');
     }
 }
