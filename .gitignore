@@ -1,10 +1,9 @@
-/node_modules
+g/node_modules
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
 .env
-.docker-compose.yml
 .env.backup
 .phpunit.result.cache
 Homestead.json
