@@ -8,7 +8,6 @@ use GuzzleHttp\Client;
 
 use Psr\Http\Message\ResponseInterface;
 use Exception;
-
 use function json_decode;
 
 class OpenWeatherProvider

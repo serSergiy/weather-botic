@@ -18,8 +18,8 @@ class WeatherController extends Controller
 
     public function getCityForecast()
     {
-        dd($this->weatherProvider->getForecastByCityName('Saint Peter Port'));
-//        dd($this->weatherProvider->getForecastByGeoPosition(0.5045, 0.599920));
-//        dd($this->weatherProvider->getForecastByCityId(32811, 'us'));
+       dd($this->weatherProvider->getForecastByCityName('Saint Peter Port'));
+       dd($this->weatherProvider->getForecastByGeoPosition(0.5045, 0.599920));
+       dd($this->weatherProvider->getForecastByCityId(32811, 'us'));
     }
 }
