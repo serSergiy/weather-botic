@@ -17,7 +17,7 @@ class Storage
     {
         $fileName = base_path() . self::STORAGE_DIR . $chatId . '.json';
         if (is_file($fileName)){
-            return json_decode(file_get_contents(base_path() . self::STORAGE_DIR . $chatId . '.json'));
+            return json_decode(file_get_contents(base_path() . self::STORAGE_DIR . $chatId . '.json'), true);
         }
         return [];
     }
@@ -26,7 +26,7 @@ class Storage
     {
         $fileName = base_path() . self::STORAGE_DIR . $chatId . '.json';
         if (is_file($fileName)){
-            $data = json_decode(file_get_contents(base_path() . self::STORAGE_DIR . $chatId . '.json'));
+            $data = json_decode(file_get_contents(base_path() . self::STORAGE_DIR . $chatId . '.json'), true);
             return $data['last_command'] ?? '';
         }
         return '';
