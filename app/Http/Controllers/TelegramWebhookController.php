@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
+use App\Services\TelegramWebhookProcessor;
 use Illuminate\Http\Request;
 
 class TelegramWebhookController
 {
-    function __invoke(Request $request): JsonResponse
+    /** @var TelegramWebhookProcessor */
+    private $webhookProcessor;
+
+    public function __construct(TelegramWebhookProcessor $webhookProcessor)
     {
-        return new JsonResponse('');
+        $this->webhookProcessor = $webhookProcessor;
+    }
+
+    public function process(Request $request)
+    {
+        $this->webhookProcessor->process($request->input());
     }
 }
