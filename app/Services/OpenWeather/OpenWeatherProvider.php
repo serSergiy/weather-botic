@@ -7,7 +7,6 @@ namespace App\Services\OpenWeather;
 use GuzzleHttp\Client;
 
 use Psr\Http\Message\ResponseInterface;
-use Exception;
 
 use function json_decode;
 
@@ -19,14 +18,17 @@ class OpenWeatherProvider
     /** @var string */
     private $appId;
 
-    public function __construct()
+    /** @var string */
+    private $lang;
+
+    public function __construct(string $lang = 'en')
     {
         $this->client = new Client([
             'base_uri' => 'https://api.openweathermap.org/data/2.5/',
-            'lang' => 'ua',
         ]);
 
         $this->appId = env('OPEN_WEATHER_APP_ID');
+        $this->lang = $lang;
     }
 
     public function getForecastByZip(int $cityZip, string $countryCode): array
@@ -54,26 +56,27 @@ class OpenWeatherProvider
         return $this->getResponseContent($response);
     }
 
-    public function getForecastByCityName(string $cityName): array
+    public function getForecastByCityName(string $cityName, string $issueType): array
     {
-        $response = $this->client->request('GET', 'weather', [
+        $response = $this->client->request('GET', $issueType, [
             'query' => [
                 'q' => $cityName,
                 'APPID' => $this->appId,
-                'lang' => 'ua',
+                'lang' => $this->lang,
             ],
         ]);
 
         return $this->getResponseContent($response);
     }
 
-    public function getForecastByGeoPosition(float $latitude, float $longitude): array
+    public function getForecastByGeoPosition(float $latitude, float $longitude, string $issueType): array
     {
-        $response = $this->client->request('GET', 'weather', [
+        $response = $this->client->request('GET', $issueType, [
             'query' => [
                 'lat' => $latitude,
                 'lon' => $longitude,
                 'APPID' => $this->appId,
+                'lang' => $this->lang,
             ],
         ]);
 
