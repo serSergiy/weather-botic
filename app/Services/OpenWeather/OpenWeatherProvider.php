@@ -7,7 +7,6 @@ namespace App\Services\OpenWeather;
 use GuzzleHttp\Client;
 
 use Psr\Http\Message\ResponseInterface;
-
 use function json_decode;
 
 class OpenWeatherProvider
