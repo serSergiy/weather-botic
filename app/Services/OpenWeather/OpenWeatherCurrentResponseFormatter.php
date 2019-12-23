@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\OpenWeather;
 
-
-class OpenWeatherCurrentResponseFormatterInterface implements ResponseFormatterInterface
+class OpenWeatherCurrentResponseFormatter implements ResponseFormatterInterface
 {
     private const MAP = [
         'Fog' => WeatherEmojies::FOG,
@@ -38,7 +37,6 @@ class OpenWeatherCurrentResponseFormatterInterface implements ResponseFormatterI
         $pressure = $this->responsePayloadHelper->getPressure();
         $sunrise = $this->responsePayloadHelper->getSunrise();
         $sunset = $this->responsePayloadHelper->getSunset();
-
 
         return 'The weather right now ' . self::MAP[$descr] . PHP_EOL . PHP_EOL
             . 'temperature ' . WeatherEmojies::TEMPERATURE . ': ' . $temp . 'C°, '
