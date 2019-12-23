@@ -30,7 +30,7 @@ class OpenWeatherEndpoint
     {
         $this->requestPayloadHelper->setPayload($payload);
 
-        $lang = ($this->requestPayloadHelper->getLang());
+        $lang = $this->requestPayloadHelper->getLang();
         $lang = in_array($lang, UserLangs::LANGS) ? $lang : 'en';
 
         $this->weatherProvider = new OpenWeatherProvider($lang);
