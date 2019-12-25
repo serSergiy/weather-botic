@@ -33,6 +33,11 @@ class ResponsePayloadHelper
         return Arr::get($this->payload, 'weather.main');
     }
 
+    public function getExpandedDescr(): ?string
+    {
+        return Arr::get($this->payload, 'weather.description');
+    }
+
     public function getPressure(): float
     {
         return Arr::get($this->payload, 'main.pressure');
