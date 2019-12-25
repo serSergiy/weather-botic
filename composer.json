@@ -12,8 +12,10 @@
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "~6.0",
         "laravel/framework": "^6.2",
+        "ext-curl": "*",
         "laravel/tinker": "^2.0",
-        "telegram-bot/api": "^2.3"
+        "telegram-bot/api": "^2.3",
+        "ext-json": "*"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

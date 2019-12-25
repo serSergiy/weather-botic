@@ -20,14 +20,19 @@ class OpenWeatherProvider
     /** @var string */
     private $lang;
 
-    public function __construct(string $lang = 'en')
+    /** @var string */
+    private $units;
+
+    public function __construct(string $lang = 'en', string $units = 'metric')
     {
         $this->client = new Client([
             'base_uri' => 'https://api.openweathermap.org/data/2.5/',
+            'verify' => false
         ]);
 
         $this->appId = env('OPEN_WEATHER_APP_ID');
         $this->lang = $lang;
+        $this->units = $units;
     }
 
     public function getForecastByZip(int $cityZip, string $countryCode): array
@@ -62,6 +67,7 @@ class OpenWeatherProvider
                 'q' => $cityName,
                 'APPID' => $this->appId,
                 'lang' => $this->lang,
+                'units' => $this->units,
             ],
         ]);
 
@@ -76,6 +82,7 @@ class OpenWeatherProvider
                 'lon' => $longitude,
                 'APPID' => $this->appId,
                 'lang' => $this->lang,
+                'units' => $this->units,
             ],
         ]);
 
