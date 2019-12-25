@@ -8,7 +8,7 @@ use App\Entities\CommandResponse;
 use App\Services\OpenWeather\OpenWeatherEndpoint;
 use App\Services\OpenWeather\WebhookIssueTypes;
 use App\Services\OpenWeather\WebhookSourceTypes;
-use TelegramBot\Api\Client as TelegramClient;
+use App\Services\Telegram\Client as TelegramClient;
 use TelegramBot\Api\Types\Message;
 use TelegramBot\Api\Types\Update;
 
@@ -107,18 +107,22 @@ class TelegramWebhookProcessor
     {
         $stored = $this->storage->get($chatId);
 
-        $message = $this->openWeather->handle([
-            'message' => [
-                'from' => ['language_code' => $message->getFrom()->getLanguageCode()],
-                'issue_type' => WebhookIssueTypes::WEATHER_CURRENT,
-                'source_type' => WebhookSourceTypes::SOURCE_SETTLEMENT,
+        try {
+            $message = $this->openWeather->handle([
                 'message' => [
-                    'city' => $stored['city']
+                    'from' => ['language_code' => $message->getFrom()->getLanguageCode()],
+                    'issue_type' => WebhookIssueTypes::WEATHER_CURRENT,
+                    'source_type' => WebhookSourceTypes::SOURCE_SETTLEMENT,
+                    'message' => [
+                        'city' => $stored['location_data']['city']
+                    ]
                 ]
-            ]
-        ]);
+            ]);
 
-        return new CommandResponse($chatId, $message);
+            return new CommandResponse($chatId, $message);
+        } catch (\Throwable $exception) {
+            return new CommandResponse($chatId, "Some error happened");
+        }
     }
 
     private function getWeatherForFiveDays(Message $message, string $chatId, string $command, string $argument): CommandResponse

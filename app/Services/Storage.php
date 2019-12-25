@@ -10,14 +10,19 @@ class Storage
 
     public function store(string $chatId, array $data): void
     {
-        file_put_contents(base_path() . self::STORAGE_DIR . $chatId . '.json', json_encode($data));
+        $filePath = base_path() . self::STORAGE_DIR . $chatId . '.json';
+
+        file_put_contents($filePath, json_encode($data, JSON_UNESCAPED_UNICODE));
     }
 
     public function get(string $chatId): array
     {
         $fileName = base_path() . self::STORAGE_DIR . $chatId . '.json';
-        if (is_file($fileName)){
-            return json_decode(file_get_contents(base_path() . self::STORAGE_DIR . $chatId . '.json'), true);
+
+        if (is_file($fileName)) {
+            $fileContent = file_get_contents(base_path() . self::STORAGE_DIR . $chatId . '.json');
+
+            return json_decode($fileContent, true, JSON_UNESCAPED_UNICODE);
         }
         return [];
     }
@@ -25,8 +30,11 @@ class Storage
     public function getLastCommand(string $chatId): string
     {
         $fileName = base_path() . self::STORAGE_DIR . $chatId . '.json';
+
         if (is_file($fileName)){
-            $data = json_decode(file_get_contents(base_path() . self::STORAGE_DIR . $chatId . '.json'), true);
+            $fileContent = file_get_contents(base_path() . self::STORAGE_DIR . $chatId . '.json');
+            $data = json_decode($fileContent, true, JSON_UNESCAPED_UNICODE);
+
             return $data['last_command'] ?? '';
         }
         return '';
