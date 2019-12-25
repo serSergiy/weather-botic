@@ -33,7 +33,7 @@ class OpenWeatherCurrentResponseFormatter implements ResponseFormatterInterface
         $descr = $this->responsePayloadHelper->getDescr() ?? 'Clear';
         $humidity = $this->responsePayloadHelper->getHumidity();
         $windSpeed = $this->responsePayloadHelper->getWindSpeed();
-        $windDeg = $this->responsePayloadHelper->getWindDeg());
+        $windDeg = $this->responsePayloadHelper->getWindDeg();
         $pressure = $this->responsePayloadHelper->getPressure();
         $sunrise = date('H:i:s', $this->responsePayloadHelper->getSunrise());
         $sunset = date('H:i:s', $this->responsePayloadHelper->getSunset());
