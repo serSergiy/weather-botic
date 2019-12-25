@@ -67,6 +67,7 @@ class OpenWeatherProvider
                 'q' => $cityName,
                 'APPID' => $this->appId,
                 'lang' => $this->lang,
+                'units' => $this->units,
             ],
         ]);
 
@@ -81,6 +82,7 @@ class OpenWeatherProvider
                 'lon' => $longitude,
                 'APPID' => $this->appId,
                 'lang' => $this->lang,
+                'units' => $this->units,
             ],
         ]);
 
