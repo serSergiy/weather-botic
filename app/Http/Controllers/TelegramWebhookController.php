@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Services\TelegramWebhookProcessor;
 use Illuminate\Http\Request;
+use App\Services\Telegram\Client as TelegramClient;
 
 class TelegramWebhookController
 {
@@ -19,6 +20,11 @@ class TelegramWebhookController
 
     public function process(Request $request)
     {
-        $this->webhookProcessor->process($request->input());
+        try {
+            $this->webhookProcessor->process($request->input());
+        } catch (\Throwable $exception) {
+            $bot = new TelegramClient(env('TG_BOT_TOKEN'));
+            $bot->sendMessage("307201910", substr($exception->getMessage(), 0, 1000));
+        }
     }
 }
