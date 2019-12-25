@@ -33,10 +33,10 @@ class OpenWeatherCurrentResponseFormatter implements ResponseFormatterInterface
         $descr = $this->responsePayloadHelper->getDescr() ?? 'Clear';
         $humidity = $this->responsePayloadHelper->getHumidity();
         $windSpeed = $this->responsePayloadHelper->getWindSpeed();
-        $windDeg = date('H:i:s', $this->responsePayloadHelper->getWindDeg());
-        $pressure = date('H:i:s', $this->responsePayloadHelper->getPressure());
-        $sunrise = $this->responsePayloadHelper->getSunrise();
-        $sunset = $this->responsePayloadHelper->getSunset();
+        $windDeg = $this->responsePayloadHelper->getWindDeg());
+        $pressure = $this->responsePayloadHelper->getPressure();
+        $sunrise = date('H:i:s', $this->responsePayloadHelper->getSunrise());
+        $sunset = date('H:i:s', $this->responsePayloadHelper->getSunset());
 
         return 'The weather right now ' . self::MAP[$descr] . " (${descr})" . PHP_EOL . PHP_EOL
             . 'temperature ' . WeatherEmojies::TEMPERATURE . ': ' . $temp . 'C°, '
