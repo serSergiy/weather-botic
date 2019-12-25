@@ -33,12 +33,12 @@ class OpenWeatherCurrentResponseFormatter implements ResponseFormatterInterface
         $descr = $this->responsePayloadHelper->getDescr();
         $humidity = $this->responsePayloadHelper->getHumidity();
         $windSpeed = $this->responsePayloadHelper->getWindSpeed();
-        $windDeg = $this->responsePayloadHelper->getWindDeg();
-        $pressure = $this->responsePayloadHelper->getPressure();
+        $windDeg = date('H:i:s', $this->responsePayloadHelper->getWindDeg());
+        $pressure = date('H:i:s', $this->responsePayloadHelper->getPressure());
         $sunrise = $this->responsePayloadHelper->getSunrise();
         $sunset = $this->responsePayloadHelper->getSunset();
 
-        return 'The weather right now ' . self::MAP[$descr] . PHP_EOL . PHP_EOL
+        return 'The weather right now ' . self::MAP[$descr] . " (${descr})" . PHP_EOL . PHP_EOL
             . 'temperature ' . WeatherEmojies::TEMPERATURE . ': ' . $temp . 'C°, '
             . 'humidity ' . WeatherEmojies::HUMIDITY . ': ' . $humidity . '%' . PHP_EOL
             . 'wind: ' . WeatherEmojies::WIND . ': '. $windSpeed . ', ' . $windDeg . PHP_EOL
@@ -46,6 +46,6 @@ class OpenWeatherCurrentResponseFormatter implements ResponseFormatterInterface
             . 'Min and Max for today: ' . $minTemp . 'C°' . WeatherEmojies::MIN_TEMPERATURE
             . ' ' . $maxTemp . 'C°' . WeatherEmojies::MAX_TEMPERATURE . PHP_EOL . PHP_EOL
             . 'Sunrise at ' . $sunrise . ' ' . WeatherEmojies::SUNRISE . PHP_EOL
-            . 'Sunset at ' . $sunset . ' ' . WeatherEmojies::SUNSET ;
+            . 'Sunset at ' . $sunset . ' ' . WeatherEmojies::SUNSET;
     }
 }

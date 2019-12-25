@@ -20,7 +20,10 @@ class OpenWeatherProvider
     /** @var string */
     private $lang;
 
-    public function __construct(string $lang = 'en')
+    /** @var string */
+    private $units;
+
+    public function __construct(string $lang = 'en', string $units = 'metric')
     {
         $this->client = new Client([
             'base_uri' => 'https://api.openweathermap.org/data/2.5/',
@@ -28,6 +31,7 @@ class OpenWeatherProvider
 
         $this->appId = env('OPEN_WEATHER_APP_ID');
         $this->lang = $lang;
+        $this->units = $units;
     }
 
     public function getForecastByZip(int $cityZip, string $countryCode): array
