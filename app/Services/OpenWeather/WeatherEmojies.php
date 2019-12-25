@@ -7,7 +7,9 @@ namespace App\Services\OpenWeather;
 interface WeatherEmojies
 {
     public const NOTIFICATION = ':sound';
-    public const TEMPERATURE = ':thermometer';
+//    public const TEMPERATURE = ':thermometer';
+    public const TEMPERATURE = "\xf0\x9f\x8c\xa1";
+
     public const HUMIDITY = ':droplet';
     public const WIND = ':wind_blowing_face';
     public const PRESSURE = ':small_red_triangle_down';

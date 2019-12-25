@@ -30,7 +30,7 @@ class OpenWeatherCurrentResponseFormatter implements ResponseFormatterInterface
         $minTemp = $this->responsePayloadHelper->getMinTemp();
         $maxTemp = $this->responsePayloadHelper->getMaxTemp();
 
-        $descr = $this->responsePayloadHelper->getDescr();
+        $descr = $this->responsePayloadHelper->getDescr() ?? 'Clear';
         $humidity = $this->responsePayloadHelper->getHumidity();
         $windSpeed = $this->responsePayloadHelper->getWindSpeed();
         $windDeg = $this->responsePayloadHelper->getWindDeg();

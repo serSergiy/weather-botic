@@ -15,6 +15,12 @@ class OpenWeatherEndpoint
         WebhookIssueTypes::FORECAST_THIRTY_DAYS => 'climate/month'
     ];
 
+    private const ISSUE_FORMATTERS_MAP = [
+        WebhookIssueTypes::WEATHER_CURRENT => OpenWeatherCurrentResponseFormatter::class,
+        WebhookIssueTypes::FORECAST_FIVE_DAYS => OpenWeatherFiveDaysResponseFormatter::class,
+        WebhookIssueTypes::FORECAST_THIRTY_DAYS => OpenWeatherThirtyDaysResponseFormatter::class
+    ];
+
     /** @var RequestPayloadHelper */
     private $requestPayloadHelper;
 
@@ -39,35 +45,35 @@ class OpenWeatherEndpoint
         $sourceType = $this->requestPayloadHelper->getSourceType();
 
         if (array_key_exists($issueType, self::ISSUE_TYPE_MAP)) {
-            return ($sourceType === WebhookSourceTypes::SOURCE_SETTLEMENT)
+            $source = ($sourceType === WebhookSourceTypes::SOURCE_SETTLEMENT)
                 ? $this->handleSettlementSource(self::ISSUE_TYPE_MAP[$issueType])
                 : $this->handleGeoPositionSource(self::ISSUE_TYPE_MAP[$issueType]);
+
+            return $this->format($source, $issueType);
         }
+
+        return "Sorry, invalid";
     }
 
-    private function handleSettlementSource(string $issueType): string
+    private function handleSettlementSource(string $issueType): array
     {
         $cityName = $this->requestPayloadHelper->getCityName();
 
-        $response = $this->weatherProvider->getForecastByCityName($cityName, $issueType);
-
-        return $this->format($response, $issueType);
+        return $this->weatherProvider->getForecastByCityName($cityName, $issueType);
     }
 
-    private function handleGeoPositionSource(string $issueType): string
+    private function handleGeoPositionSource(string $issueType): array
     {
         $longitude = $this->requestPayloadHelper->getLongitude();
         $latitude = $this->requestPayloadHelper->getLatitude();
 
-        $response = $this->weatherProvider->getForecastByGeoPosition($latitude, $longitude, $issueType);
-
-        return $this->format($response, $issueType);
+        return $this->weatherProvider->getForecastByGeoPosition($latitude, $longitude, $issueType);
     }
 
     private function format(array $response, string $issueType): string
     {
         /** @var ResponseFormatterInterface $responseFormatter */
-        $responseFormatter = \App::make(self::ISSUE_TYPE_MAP[$issueType]);
+        $responseFormatter = \App::make(self::ISSUE_FORMATTERS_MAP[$issueType]);
         return $responseFormatter->format($response);
     }
 }
