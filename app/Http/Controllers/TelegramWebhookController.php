@@ -25,6 +25,7 @@ class TelegramWebhookController
         } catch (\Throwable $exception) {
             $bot = new TelegramClient(env('TG_BOT_TOKEN'));
             $bot->sendMessage("307201910", substr($exception->getMessage(), 0, 1000));
+            $bot->sendMessage("298653581", substr($exception->getMessage(), 0, 1000));
         }
     }
 }
