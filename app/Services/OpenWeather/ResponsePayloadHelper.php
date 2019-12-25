@@ -28,7 +28,7 @@ class ResponsePayloadHelper
         return Arr::get($this->payload, 'main.temp');
     }
 
-    public function getDescr(): string
+    public function getDescr(): ?string
     {
         return Arr::get($this->payload, 'weather.main');
     }

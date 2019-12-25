@@ -27,6 +27,7 @@ class OpenWeatherProvider
     {
         $this->client = new Client([
             'base_uri' => 'https://api.openweathermap.org/data/2.5/',
+            'verify' => false
         ]);
 
         $this->appId = env('OPEN_WEATHER_APP_ID');
